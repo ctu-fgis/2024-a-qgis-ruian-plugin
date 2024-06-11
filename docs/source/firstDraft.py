@@ -1,17 +1,18 @@
-from qgis.core import QgsProject
+def add_join_DruhPozemku(self, parcely_layer):
+    """Joins a .csv (code list of land types with description) to layer 'Parcely'
+    """
+    path = os.path.join(os.path.dirname(__file__), 'files','druh_pozemku.csv')
+    csv_layer = QgsVectorLayer(path, 'druh_pozemku', 'delimitedtext')
+    csvField = 'KOD'
+    layerField = 'DruhPozemkuKod'
 
-csv = QgsProject.instance().mapLayersByName('SC_D_POZEMKU')[0]
-csvField = 'KOD'
-layer = QgsProject.instance().mapLayersByName('Parcely')[0]
-layerField = 'DruhPozemkuKod'
+    joinObject = QgsVectorLayerJoinInfo()
+    joinObject.setJoinLayerId(csv_layer.id())
+    joinObject.setJoinFieldName(csvField)
+    joinObject.setTargetFieldName(layerField)
+    joinObject.setUsingMemoryCache(True)
+    joinObject.setJoinLayer(csv_layer)
+    joinObject.setJoinFieldNamesSubset("NAZEV")
 
-joinObject = QgsVectorLayerJoinInfo()
-joinObject.setJoinLayerId(csv.id())
-joinObject.setJoinFieldName(csvField)
-joinObject.setTargetFieldName(layerField)
-joinObject.setPrefix('g')
-joinObject.setUsingMemoryCache(True)
-joinObject.setJoinLayer(csv)
-
-layer.addJoin(joinObject)
-QgsProject.instance().addMapLayer(layer)
+    parcely_layer.addJoin(joinObject)
+    QgsProject.instance().addMapLayer(parcely_layer)
