@@ -37,20 +37,18 @@ def rearrange_columns(self, layer: QgsVectorLayer, new_order: list) -> None:
     pass
 
 def main():
-    uri ="c:\\Users\\Vojta\\_CVUT\\2023_2024\\FGIS\\ruianTest.gpkg|layername=parcely"
-    parcely_layer = QgsVectorLayer(uri, "parcely", "ogr")
+    parcely_uri = os.path.join(os.path.dirname(__file__), "test", "sample_data", "testData.gpkg") + "|layername=parcely"
+    parcely_layer = QgsVectorLayer(parcely_uri, "parcely", "ogr")
     parcely_field = "DruhPozemkuKod"
 
     # headTail = os.path.split(os.path.dirname(__file__)) # TODO: po zarazeni do MainApp upravit cestu
-    path = "file:///c:\\Users\\Vojta\\_CVUT\\2023_2024\\FGIS\\data\\SC_D_POZEMKU.csv?delimiter=;"
-    csv_layer = QgsVectorLayer(path, "DruhPozemku", "delimitedtext")
+    csv_path = os.path.join(os.path.dirname(__file__), "files", "SC_D_POZEMKU.csv")
+    csv_layer = QgsVectorLayer(f"file:///{csv_path}?delimiter=;", "DruhPozemku", "delimitedtext")
     csv_field = "KOD"
 
-
-
-    mylayer = add_join_csv_file(parcely_layer, csv_layer, parcely_field, csv_field)
-    QgsProject.instance().addMapLayer(mylayer)
+    add_join_csv_file(parcely_layer, csv_layer, parcely_field, csv_field)
+    QgsProject.instance().addMapLayer(parcely_layer)
     new_order = []
 
 if __name__ in ('__main__', '__script__', '__console__'):
-    main()       
+    main()
