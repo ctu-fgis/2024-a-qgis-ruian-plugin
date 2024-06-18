@@ -48,6 +48,7 @@ def main():
 
     add_join_csv_file(parcely_layer, csv_layer, parcely_field, csv_field)
     QgsProject.instance().addMapLayer(parcely_layer)
+    QgsProject.instance().addMapLayer(csv_layer, addToLegend=False)
 
 if __name__ in ('__main__', '__script__', '__console__'):
     main()
