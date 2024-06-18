@@ -42,7 +42,7 @@ def main():
     parcely_field = "DruhPozemkuKod"
 
     # headTail = os.path.split(os.path.dirname(__file__)) # TODO: po zarazeni do MainApp upravit cestu
-    csv_path = os.path.join(os.path.dirname(__file__), "files", "SC_D_POZEMKU.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "files", "druh_pozemku.csv")
     csv_layer = QgsVectorLayer(f"file:///{csv_path}?delimiter=;", "DruhPozemku", "delimitedtext")
     csv_field = "KOD"
 
