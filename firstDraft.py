@@ -48,7 +48,6 @@ def main():
 
     add_join_csv_file(parcely_layer, csv_layer, parcely_field, csv_field)
     QgsProject.instance().addMapLayer(parcely_layer)
-    new_order = []
 
 if __name__ in ('__main__', '__script__', '__console__'):
     main()
