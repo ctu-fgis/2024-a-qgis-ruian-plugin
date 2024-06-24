@@ -1,7 +1,7 @@
 import os
 from qgis.core import QgsProject, QgsVectorLayer, QgsVectorLayerJoinInfo
 
-def add_join_csv_file(target_layer: QgsVectorLayer, csv_layer: QgsVectorLayer, target_field: str = "DruhPozemkuKod", csv_field: str = "KOD", csv_subset: list = ["NAZEV"]) -> QgsVectorLayer:
+def add_join(target_layer: QgsVectorLayer, csv_layer: QgsVectorLayer, target_field: str = "DruhPozemkuKod", csv_field: str = "KOD", csv_subset: list = ["NAZEV"]) -> QgsVectorLayer:
     """Performs left outer join from 'target_layer' to 'csv_layer'. Initially used to perform a join from 'Parcely' to code list of land types.
     
     @type target_layer: QgsVectorLayer
@@ -37,12 +37,12 @@ def rearrange_columns(self, layer: QgsVectorLayer, new_order: list) -> None:
     pass
 
 def main():
-    parcely_uri = os.path.join(os.path.dirname(__file__), "test", "sample_data", "testData.gpkg") + "|layername=parcely"
+    parcely_uri = os.path.join(os.path.dirname('__file__'), "test", "sample_data", "testData.gpkg") + "|layername=parcely"
     parcely_layer = QgsVectorLayer(parcely_uri, "parcely", "ogr")
     parcely_field = "DruhPozemkuKod"
 
     # headTail = os.path.split(os.path.dirname(__file__)) # TODO: po zarazeni do MainApp upravit cestu
-    csv_path = os.path.join(os.path.dirname(__file__), "files", "druh_pozemku.csv")
+    csv_path = os.path.join(os.path.dirname('__file__'), "files", "druh_pozemku.csv")
     csv_layer = QgsVectorLayer(f"file:///{csv_path}?delimiter=;", "DruhPozemku", "delimitedtext")
     csv_field = "KOD"
 
